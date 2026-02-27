@@ -1,0 +1,327 @@
+/* =========================
+   9th Chord Synth — Aesthetic UI
+   (drop-in replacement for style.css)
+   ========================= */
+
+:root{
+  --bg0: #070812;
+  --bg1: #0b0c1a;
+  --card: rgba(255,255,255,.055);
+  --card2: rgba(255,255,255,.08);
+  --stroke: rgba(255,255,255,.14);
+  --stroke2: rgba(255,255,255,.22);
+
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.66);
+  --muted2: rgba(255,255,255,.46);
+
+  --shadow: 0 18px 60px rgba(0,0,0,.55);
+  --shadow2: 0 10px 30px rgba(0,0,0,.35);
+
+  --r-lg: 20px;
+  --r-md: 14px;
+  --r-sm: 12px;
+
+  --pad: 18px;
+  --gap: 14px;
+
+  /* neon accents */
+  --a1: #8b5cf6;   /* violet */
+  --a2: #22d3ee;   /* cyan */
+  --a3: #34d399;   /* green */
+}
+
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
+
+body{
+  margin:0;
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  letter-spacing: -0.2px;
+  background:
+    radial-gradient(900px 520px at 18% 10%, rgba(139,92,246,.28), transparent 55%),
+    radial-gradient(820px 460px at 78% 18%, rgba(34,211,238,.24), transparent 55%),
+    radial-gradient(900px 540px at 50% 92%, rgba(52,211,153,.14), transparent 60%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+  overflow-x: hidden;
+}
+
+/* subtle grain */
+body::before{
+  content:"";
+  position: fixed;
+  inset:-40px;
+  pointer-events:none;
+  opacity:.08;
+  mix-blend-mode: overlay;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+
+.wrap{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 26px 18px 44px;
+}
+
+/* top header */
+h1{
+  margin: 2px 0 10px;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.08;
+  font-weight: 760;
+  letter-spacing: -0.7px;
+}
+
+.sub{
+  margin: 0 0 18px;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 68ch;
+}
+
+/* panels */
+.panel{
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.045));
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-lg);
+  padding: var(--pad);
+  box-shadow: var(--shadow2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.panel::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  pointer-events:none;
+  background:
+    radial-gradient(400px 160px at 14% 12%, rgba(139,92,246,.18), transparent 62%),
+    radial-gradient(420px 180px at 86% 16%, rgba(34,211,238,.16), transparent 62%);
+  opacity:.9;
+}
+
+.panel > *{ position: relative; }
+
+h2{
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 720;
+  letter-spacing: .2px;
+  color: rgba(255,255,255,.88);
+}
+
+/* rows inside panels */
+.oscrow, .envrow{
+  display:flex;
+  flex-wrap: wrap;
+  align-items:center;
+  gap: 12px;
+  padding: 12px 12px;
+  border-radius: var(--r-md);
+  background: rgba(10,11,22,.48);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  margin: 10px 0;
+}
+
+label{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+label input[type="checkbox"]{
+  width: 16px;
+  height: 16px;
+  accent-color: var(--a1);
+}
+
+/* select */
+select{
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 12px;
+  padding: 8px 10px;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+select:focus{
+  border-color: rgba(34,211,238,.55);
+  box-shadow: 0 0 0 3px rgba(34,211,238,.18);
+}
+
+/* range */
+input[type="range"]{
+  width: 160px;
+  accent-color: var(--a2);
+}
+
+.envrow input[type="range"]{
+  width: 200px;
+}
+
+/* chord grid */
+.chords{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+@media (max-width: 760px){
+  .chords{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .envrow input[type="range"]{ width: 180px; }
+}
+
+/* chord buttons */
+.chordBtn{
+  position: relative;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.055);
+  border-radius: 18px;
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  box-shadow: var(--shadow2);
+  transform: translateZ(0);
+  transition: transform .14s ease, border-color .14s ease, background .14s ease, box-shadow .14s ease;
+  overflow: hidden;
+}
+
+.chordBtn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(280px 120px at 18% 10%, rgba(139,92,246,.22), transparent 60%),
+    radial-gradient(260px 120px at 84% 18%, rgba(34,211,238,.18), transparent 60%);
+  opacity:.55;
+}
+
+.chordBtn:hover{
+  transform: translateY(-2px);
+  border-color: rgba(34,211,238,.35);
+  background: rgba(255,255,255,.075);
+  box-shadow: 0 22px 70px rgba(0,0,0,.55);
+}
+
+.chordBtn:active{
+  transform: translateY(0px) scale(.99);
+  box-shadow: 0 12px 38px rgba(0,0,0,.45);
+}
+
+.chordName{
+  font-weight: 780;
+  font-size: 16px;
+  letter-spacing: -.25px;
+  margin-bottom: 6px;
+}
+
+.chordNotes{
+  font-size: 12px;
+  color: var(--muted2);
+  letter-spacing: .2px;
+}
+
+/* hint */
+.hint{
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* make sliders + labels breathe */
+.oscrow label, .envrow label{
+  padding: 4px 6px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+/* nicer spacing between panels */
+.panel + .panel{
+  margin-top: 16px;
+}
+
+
+/* ====== WOBBLE BACKGROUND LAYER ====== */
+body::after{
+  content:"";
+  position: fixed;
+  inset:-30vmax;
+  pointer-events:none;
+  opacity: .75;
+  filter: blur(22px) saturate(1.2) contrast(1.05);
+  transform: translate3d(0,0,0) scale(1.05);
+  mix-blend-mode: screen;
+  will-change: transform, filter, opacity, background-position;
+
+  /* 기본값 (JS가 클릭할 때마다 바꿈) */
+  background:
+    radial-gradient(520px 300px at var(--bx1, 20%) var(--by1, 15%), rgba(139,92,246,var(--bi1,.22)), transparent 62%),
+    radial-gradient(540px 320px at var(--bx2, 80%) var(--by2, 22%), rgba(34,211,238,var(--bi2,.18)), transparent 62%),
+    radial-gradient(680px 360px at var(--bx3, 45%) var(--by3, 88%), rgba(52,211,153,var(--bi3,.12)), transparent 65%);
+}
+
+/* 출렁 애니메이션 (class 토글) */
+body.wobble::after{
+  animation: bgWobble .70s cubic-bezier(.2,.9,.18,1) both;
+}
+
+body.wobble{
+  animation: pageJolt .25s ease-out both;
+}
+
+@keyframes bgWobble{
+  0%   { transform: translate3d(0,0,0) scale(1.02) rotate(0deg); filter: blur(20px) saturate(1.0); opacity: .55; }
+  40%  { transform: translate3d(var(--dx, 14px), var(--dy, -10px), 0) scale(1.12) rotate(var(--rot, .6deg)); filter: blur(28px) saturate(1.35); opacity: .95; }
+  100% { transform: translate3d(0,0,0) scale(1.05) rotate(0deg); filter: blur(22px) saturate(1.15); opacity: .75; }
+}
+
+/* 살짝 화면 떨림 */
+@keyframes pageJolt{
+  0%   { transform: translate3d(0,0,0); }
+  30%  { transform: translate3d(calc(var(--jx, 0px) * 1), calc(var(--jy, 0px) * 1), 0); }
+  60%  { transform: translate3d(calc(var(--jx, 0px) * -0.6), calc(var(--jy, 0px) * -0.6), 0); }
+  100% { transform: translate3d(0,0,0); }
+}
+
+
+/* ====== LIQUID COLOR FLOW BACKGROUND ====== */
+
+:root{
+  --hue: 260;       /* 기본 보라 */
+  --hue2: 190;      /* 보조 색 */
+  --flow-speed: 6s; /* 흐르는 속도 */
+}
+
+/* 기존 body background 덮어쓰기 */
+body{
+  background:
+    radial-gradient(800px 500px at 20% 10%, hsl(var(--hue), 80%, 60%), transparent 60%),
+    radial-gradient(700px 500px at 80% 20%, hsl(var(--hue2), 85%, 60%), transparent 60%),
+    radial-gradient(900px 600px at 50% 90%, hsl(calc(var(--hue) + 120), 70%, 55%), transparent 65%),
+    linear-gradient(180deg, #070812, #0b0c1a);
+
+  background-blend-mode: screen;
+  transition: background 1.6s cubic-bezier(.2,.8,.2,1);
+  animation: slowDrift var(--flow-speed) linear infinite;
+}
+
+/* 아주 느린 물결 */
+@keyframes slowDrift{
+  0%   { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+  50%  { background-position: 10% 6%, -8% 4%, 6% -10%, 0% 0%; }
+  100% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+}
